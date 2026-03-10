@@ -699,6 +699,47 @@
     `;
   }
 
+  function renderGeneric(section, ctx) {
+    const { content } = ctx;
+    const c = safeObj(content[section.id]);
+    const headline = escapeHtml(c.headline || c.title || section.type);
+    const text = escapeHtml(c.text || c.subline || '');
+    const items = c.items || c.steps || c.badges || [];
+
+    const head = `
+      <div class="sb-sectionHead">
+        <h2 class="sb-h2">${headline}</h2>
+        ${text ? `<p class="sb-p sb-muted">${text}</p>` : ''}
+      </div>
+    `;
+
+    let body = '';
+    if (Array.isArray(items) && items.length) {
+      body = `<div class="sb-services__list" role="list">${items.map(it => {
+        const label = escapeHtml((it && (it.label || it.title || it.name || it.q)) || 'Item');
+        const desc = escapeHtml((it && (it.text || it.description || it.a || it.value)) || '');
+        const icon = escapeHtml((it && it.icon) || '•');
+        return `
+          <div class="sb-services__listItem" role="listitem">
+            <div class="sb-services__icon" aria-hidden="true">${icon}</div>
+            <div class="sb-services__body">
+              <div class="sb-services__title">${label}</div>
+              ${desc ? `<div class="sb-services__text">${desc}</div>` : ''}
+            </div>
+          </div>`;
+      }).join('')}</div>`;
+    }
+
+    return `
+      <div class="sb-generic sb-generic--${escapeHtml(section.variant || 'default')}">
+        ${containerOpen()}
+          ${head}
+          ${body}
+        ${containerClose()}
+      </div>
+    `;
+  }
+
   function generateSectionHTML(section, ctx) {
     const { layout } = ctx;
 
@@ -715,7 +756,7 @@
     else if (section.type === 'cta') inner = renderCTA(section, ctx);
     else if (section.type === 'footer') inner = renderFooter(section, ctx);
     else if (section.type === 'custom') inner = renderCustom(section, ctx);
-    else inner = ''; // unknown
+    else inner = renderGeneric(section, ctx);
 
     if (!inner) return '';
 

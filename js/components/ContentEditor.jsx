@@ -17,7 +17,7 @@
 
   const { useMemo, useCallback, useRef } = React;
 
-  const Icon = SB5.components.Icon;
+  const getIcon = () => SB5.components.Icon;
 
   function hasIcon(name) {
     const icons = SB5.data && SB5.data.icons;
@@ -135,6 +135,51 @@
         return [
           { key: 'elements', label: 'Custom Elements', type: 'customElements' }
         ];
+      case 'authority':
+        return [
+          { key: 'headline', label: 'Titel', type: 'text' },
+          { key: 'items', label: 'Zertifikate / Badges', type: 'list', itemLabel: 'Badge', fields: [
+            { key: 'label', label: 'Label', type: 'text' },
+            { key: 'description', label: 'Beschreibung', type: 'text' },
+            { key: 'icon', label: 'Icon (Emoji)', type: 'text' }
+          ], defaultItem: () => ({ label: 'Zertifikat', description: '', icon: '🏅' }) }
+        ];
+      case 'gallery':
+        return [
+          { key: 'headline', label: 'Titel', type: 'text' },
+          { key: 'items', label: 'Bilder', type: 'list', itemLabel: 'Bild', fields: [
+            { key: 'title', label: 'Titel', type: 'text' },
+            { key: 'image', label: 'Bild', type: 'image' },
+            { key: 'text', label: 'Beschreibung', type: 'text' }
+          ], defaultItem: () => ({ title: 'Projekt', image: null, text: '' }) }
+        ];
+      case 'process':
+        return [
+          { key: 'headline', label: 'Titel', type: 'text' },
+          { key: 'items', label: 'Schritte', type: 'list', itemLabel: 'Schritt', fields: [
+            { key: 'title', label: 'Titel', type: 'text' },
+            { key: 'text', label: 'Beschreibung', type: 'textarea' },
+            { key: 'icon', label: 'Icon (Emoji)', type: 'text' }
+          ], defaultItem: () => ({ title: 'Schritt', text: 'Beschreibung…', icon: '1️⃣' }) }
+        ];
+      case 'proofTable':
+        return [
+          { key: 'headline', label: 'Titel', type: 'text' },
+          { key: 'items', label: 'Vergleichspunkte', type: 'list', itemLabel: 'Punkt', fields: [
+            { key: 'label', label: 'Eigenschaft', type: 'text' },
+            { key: 'value', label: 'Wert / Check', type: 'text' }
+          ], defaultItem: () => ({ label: 'Feature', value: '✓' }) }
+        ];
+      case 'stickyCta':
+        return [
+          { key: 'text', label: 'Button Text', type: 'text' },
+          { key: 'href', label: 'Link', type: 'text' }
+        ];
+      case 'cookie':
+        return [
+          { key: 'headline', label: 'Titel', type: 'text' },
+          { key: 'text', label: 'Text', type: 'textarea' }
+        ];
       default:
         return [
           { key: 'headline', label: 'Titel', type: 'text' },
@@ -212,13 +257,13 @@
                 </div>
                 <div className="list-editor__itemActions">
                   <button type="button" className="btn btn--xs" onClick={() => move(idx, -1)} aria-label="Nach oben">
-                    {(Icon && hasIcon('chevronDown')) ? (<span style={{ display: 'inline-flex', transform: 'rotate(180deg)' }}><Icon name="chevronDown" size={14} /></span>) : '↑'}
+                    {(() => { const I = getIcon(); return I && hasIcon('chevronDown') ? (<span style={{ display: 'inline-flex', transform: 'rotate(180deg)' }}><I name="chevronDown" size={14} /></span>) : '↑'; })()}
                   </button>
                   <button type="button" className="btn btn--xs" onClick={() => move(idx, 1)} aria-label="Nach unten">
-                    {(Icon && hasIcon('chevronDown')) ? <Icon name="chevronDown" size={14} /> : '↓'}
+                    {(() => { const I = getIcon(); return I && hasIcon('chevronDown') ? <I name="chevronDown" size={14} /> : '↓'; })()}
                   </button>
                   <button type="button" className="btn btn--xs btn--danger" onClick={() => removeItem(idx)} aria-label="Entfernen">
-                    {(Icon && hasIcon('trash')) ? <Icon name="trash" size={14} /> : '×'}
+                    {(() => { const I = getIcon(); return I && hasIcon('trash') ? <I name="trash" size={14} /> : '×'; })()}
                   </button>
                 </div>
               </div>
@@ -253,7 +298,7 @@
         </div>
 
         <button type="button" className="btn btn--sm" onClick={addItem}>
-          {(Icon && hasIcon('plus')) ? <Icon name="plus" size={14} /> : null}
+          {(() => { const I = getIcon(); return I && hasIcon('plus') ? <I name="plus" size={14} /> : null; })()}
           Hinzufügen
         </button>
       </div>

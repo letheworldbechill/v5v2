@@ -16,7 +16,7 @@
 
   const { useId, useRef } = React;
 
-  const Icon = SB5.components.Icon;
+  const getIcon = () => SB5.components.Icon;
 
   function hasIcon(name) {
     const icons = (global.SB5 && global.SB5.data && global.SB5.data.icons) ? global.SB5.data.icons : null;
@@ -72,7 +72,7 @@
               onClick={pick}
               disabled={disabled}
             >
-              {(Icon && hasIcon('upload')) ? <Icon name="upload" size={14} /> : null}
+              {(() => { const I = getIcon(); return I && hasIcon('upload') ? <I name="upload" size={14} /> : null; })()}
               Upload
             </button>
 
