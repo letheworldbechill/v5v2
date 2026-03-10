@@ -39,8 +39,8 @@
 
   function spacingStyle(layout, id) {
     const sp = (layout && layout.spacing && layout.spacing[id]) ? layout.spacing[id] : null;
-    const pt = clamp(Number(sp && sp.pt || 64), 0, 999);
-    const pb = clamp(Number(sp && sp.pb || 64), 0, 999);
+    const pt = clamp(Number(sp && sp.pt != null ? sp.pt : 64), 0, 999);
+    const pb = clamp(Number(sp && sp.pb != null ? sp.pb : 64), 0, 999);
     return `style="padding-top:${pt}px;padding-bottom:${pb}px"`;
   }
 

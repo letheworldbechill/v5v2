@@ -8,6 +8,8 @@
 
   function DesignSidebar({ state, dispatch, SidebarSection }) {
     const brand = state?.brand || {};
+    const layout = state?.layout || { sections: [], order: [] };
+    const content = state?.content || {};
     const ui = state?.ui || {};
     const ActionTypes = SB5.core.state?.ActionTypes || {};
 
@@ -22,10 +24,25 @@
     const setFont = useCallback((font) => dispatch?.({ type: ActionTypes.SET_FONT, payload: font }), [dispatch, ActionTypes]);
     const setRadius = useCallback((radius) => dispatch?.({ type: ActionTypes.SET_RADIUS, payload: radius }), [dispatch, ActionTypes]);
 
+    const activeSection = layout.sections.find(s => s.id === ui.activeSection);
+
     if (ui.sidebarTab === 'content') {
+      if (!activeSection) {
+        return (
+          <SidebarSection title="Inhalt bearbeiten">
+            <p className="sidebar__hint">Wähle eine Section aus, um den Inhalt zu bearbeiten.</p>
+          </SidebarSection>
+        );
+      }
       return (
         <SidebarSection title="Inhalt bearbeiten">
-          {ContentEditor ? <ContentEditor state={state} dispatch={dispatch} /> : <p className="sidebar__hint">Content Editor lädt...</p>}
+          {ContentEditor ? (
+            <ContentEditor
+              sectionType={activeSection.type}
+              content={content[activeSection.id] || {}}
+              onChange={(patch) => dispatch?.({ type: ActionTypes.UPDATE_CONTENT, payload: { id: activeSection.id, ...patch } })}
+            />
+          ) : <p className="sidebar__hint">Content Editor lädt...</p>}
         </SidebarSection>
       );
     }
@@ -33,10 +50,10 @@
     return (
       <>
         <SidebarSection title="Logo">
-          {LogoUpload ? <LogoUpload logo={brand.logo} onChange={setLogo} /> : <p className="sidebar__hint">Logo Upload lädt...</p>}
+          {LogoUpload ? <LogoUpload value={brand.logo} onChange={setLogo} onRemove={() => setLogo(null)} /> : <p className="sidebar__hint">Logo Upload lädt...</p>}
         </SidebarSection>
         <SidebarSection title="Farben">
-          {ColorStack ? <ColorStack colors={brand.colors} onChange={setColors} /> : <p className="sidebar__hint">Color Stack lädt...</p>}
+          {ColorStack ? <ColorStack logo={brand.logo} colors={brand.colors} onLogoChange={setLogo} onColorsChange={setColors} /> : <p className="sidebar__hint">Color Stack lädt...</p>}
         </SidebarSection>
         <SidebarSection title="Schrift">
           {FontPicker ? <FontPicker value={brand.font} onChange={setFont} /> : <p className="sidebar__hint">Font Picker lädt...</p>}
