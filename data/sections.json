@@ -1,0 +1,30 @@
+{
+  "sections": {
+    "header": { "type": "header", "name": "Header", "icon": "📍", "category": "primary", "keywords": ["logo", "navigation", "menü", "menu", "kopf", "nav"], "variants": [{"id": "simple", "label": "Einfach"}, {"id": "centered", "label": "Zentriert"}], "defaultVariant": "simple" },
+    "hero": { "type": "hero", "name": "Hero", "icon": "🎯", "category": "primary", "keywords": ["bild", "headline", "überschrift", "start", "banner", "titel"], "variants": [{"id": "centered", "label": "Zentriert"}, {"id": "split", "label": "Split"}, {"id": "minimal", "label": "Minimal"}], "defaultVariant": "centered" },
+    "services": { "type": "services", "name": "Services", "icon": "💼", "category": "primary", "keywords": ["leistung", "angebot", "dienstleistung", "produkt"], "variants": [{"id": "grid-3", "label": "3 Spalten"}, {"id": "grid-2", "label": "2 Spalten"}], "defaultVariant": "grid-3" },
+    "cta": { "type": "cta", "name": "CTA", "icon": "📞", "category": "primary", "keywords": ["kontakt", "telefon", "email", "anruf", "button", "aktion"], "variants": [{"id": "centered", "label": "Zentriert"}, {"id": "banner", "label": "Banner"}], "defaultVariant": "centered" },
+    "footer": { "type": "footer", "name": "Footer", "icon": "📋", "category": "primary", "keywords": ["fuss", "impressum", "social", "links", "adresse"], "variants": [{"id": "simple", "label": "Einfach"}, {"id": "columns", "label": "Spalten"}], "defaultVariant": "simple" },
+    
+    "trustbar": { "type": "trustbar", "name": "Statistiken", "icon": "📊", "category": "trust", "keywords": ["zahlen", "statistik", "kunden", "vertrauen", "trust"], "variants": [{"id": "logos", "label": "Logos"}, {"id": "stats", "label": "Zahlen"}], "defaultVariant": "stats" },
+    "authority": { "type": "authority", "name": "Zertifikate", "icon": "🏅", "category": "trust", "keywords": ["zertifikat", "partner", "auszeichnung", "siegel", "badge"], "variants": [{"id": "chips", "label": "Chips"}, {"id": "list", "label": "Liste"}], "defaultVariant": "chips" },
+    "testimonials": { "type": "testimonials", "name": "Kundenstimmen", "icon": "💬", "category": "trust", "keywords": ["kunde", "referenz", "bewertung", "stimme", "review", "meinung"], "variants": [{"id": "grid", "label": "Grid"}, {"id": "slider", "label": "Slider"}], "defaultVariant": "grid" },
+    
+    "team": { "type": "team", "name": "Team", "icon": "👥", "category": "content", "keywords": ["mitarbeiter", "person", "über uns", "about"], "variants": [{"id": "grid", "label": "Grid"}, {"id": "list", "label": "Liste"}], "defaultVariant": "grid" },
+    "gallery": { "type": "gallery", "name": "Galerie", "icon": "🖼️", "category": "content", "keywords": ["bild", "foto", "portfolio", "projekt", "referenz"], "variants": [{"id": "grid", "label": "Grid"}, {"id": "masonry", "label": "Masonry"}], "defaultVariant": "grid" },
+    "faq": { "type": "faq", "name": "FAQ", "icon": "❓", "category": "content", "keywords": ["frage", "antwort", "hilfe", "support"], "variants": [{"id": "accordion", "label": "Akkordeon"}, {"id": "two-column", "label": "2 Spalten"}], "defaultVariant": "accordion" },
+    
+    "proofTable": { "type": "proofTable", "name": "Vergleichstabelle", "icon": "📋", "category": "extras", "keywords": ["vergleich", "tabelle", "preis", "unterschied"], "variants": [{"id": "simple", "label": "Einfach"}, {"id": "highlight", "label": "Mit Highlight"}], "defaultVariant": "simple" },
+    "process": { "type": "process", "name": "Ablauf", "icon": "🔄", "category": "extras", "keywords": ["prozess", "schritt", "workflow", "ablauf"], "variants": [{"id": "horizontal", "label": "Horizontal"}, {"id": "vertical", "label": "Vertikal"}], "defaultVariant": "horizontal" },
+    "benefits": { "type": "benefits", "name": "Vorteile", "icon": "✨", "category": "extras", "keywords": ["vorteil", "nutzen", "benefit", "warum"], "variants": [{"id": "grid-2", "label": "2 Spalten"}, {"id": "list", "label": "Liste"}], "defaultVariant": "grid-2" },
+    "stickyCta": { "type": "stickyCta", "name": "Sticky CTA", "icon": "📌", "category": "extras", "keywords": ["sticky", "fest", "fixed", "button"], "variants": [{"id": "bottom", "label": "Unten"}, {"id": "corner", "label": "Ecke"}], "defaultVariant": "bottom" },
+    "cookie": { "type": "cookie", "name": "Cookie Banner", "icon": "🍪", "category": "extras", "keywords": ["cookie", "dsgvo", "datenschutz", "consent"], "variants": [{"id": "banner", "label": "Banner"}, {"id": "modal", "label": "Modal"}], "defaultVariant": "banner" }
+  },
+  "categories": {
+    "primary": { "id": "primary", "name": "Hauptbereiche", "icon": "⭐", "collapsed": false },
+    "trust": { "id": "trust", "name": "Vertrauen", "icon": "🏆", "collapsed": true },
+    "content": { "id": "content", "name": "Inhalt", "icon": "📄", "collapsed": true },
+    "extras": { "id": "extras", "name": "Extras", "icon": "⚙️", "collapsed": true }
+  },
+  "categoryOrder": ["primary", "trust", "content", "extras"]
+}

@@ -1,0 +1,6 @@
+[
+  { "id": "system", "name": "System", "value": "system-ui, -apple-system, sans-serif", "googleFontsHref": "" },
+  { "id": "inter", "name": "Inter", "value": "'Inter', system-ui, sans-serif", "googleFontsHref": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" },
+  { "id": "dmsans", "name": "DM Sans", "value": "'DM Sans', system-ui, sans-serif", "googleFontsHref": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" },
+  { "id": "serif", "name": "Serif", "value": "ui-serif, Georgia, serif", "googleFontsHref": "" }
+]

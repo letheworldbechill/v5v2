@@ -1,0 +1,5 @@
+{
+  "schweizer_kmu": { "name": "Schweizer KMU", "sections": ["header", "hero", "trustbar", "services", "benefits", "testimonials", "faq", "cta", "footer", "cookie"], "theme": {"primary": "#0f766e", "accent": "#f59e0b"} },
+  "it": { "name": "IT / Software", "sections": ["header", "hero", "trustbar", "services", "benefits", "testimonials", "faq", "cta", "footer"], "theme": {"primary": "#0f766e", "accent": "#6366f1"} },
+  "minimal": { "name": "Minimal", "sections": ["header", "hero", "services", "cta", "footer"], "theme": {"primary": "#111827", "accent": "#f59e0b"} }
+}

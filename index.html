@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smooth Builder 5</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f766e">
+
+  <!-- Builder UI CSS -->
+  <link rel="stylesheet" href="css/builder.css" />
+  <link rel="stylesheet" href="css/canvas.css" />
+  <link rel="stylesheet" href="css/preview.css" />
+</head>
+<body>
+  <noscript>Bitte JavaScript aktivieren, um Smooth Builder 5 zu nutzen.</noscript>
+
+  <div id="root"></div>
+
+  <!-- Libraries (CDN, no build step) -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+
+  <!-- Export deps -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+  <!-- SB5 Namespace -->
+  <script>
+    window.SB5 = window.SB5 || { core: {}, components: {}, modes: {}, preview: {}, generators: {}, exporters: {}, features: {}, data: {} };
+  </script>
+
+  <!-- Data (JS) -->
+  <script src="data/icons.js"></script>
+
+  <!-- Core -->
+  <script src="js/core/utils.js"></script>
+  <script src="js/core/history.js"></script>
+  <script src="js/core/storage.js"></script>
+  <script src="js/core/state.js"></script>
+
+  <!-- Features -->
+  <script src="js/features/colorStack.js"></script>
+  <script src="js/features/consent.js"></script>
+  <script src="js/features/dragDrop.js"></script>
+
+  <!-- Generators + Exporters -->
+  <script src="js/generators/css.js"></script>
+  <script src="js/generators/html.js"></script>
+  <script src="js/generators/js.js"></script>
+  <script src="js/generators/legal.js"></script>
+  <script src="js/generators/export.js"></script>
+
+  <!-- Components (JSX via Babel) -->
+  <script type="text/babel" data-presets="react" src="js/components/Icon.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/components/Toast.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/components/Modal.jsx"></script>
+
+  <script type="text/babel" data-presets="react" src="js/components/Toolbar.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/components/Sidebar.jsx"></script>
+
+  <script type="text/babel" data-presets="react" src="js/components/GridOverlay.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/components/SectionPlaceholder.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/components/SpacingSlider.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/components/VariantPicker.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/components/DraggableList.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/components/Canvas.jsx"></script>
+
+  <script type="text/babel" data-presets="react" src="js/components/LogoUpload.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/components/ColorPalette.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/components/ColorStack.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/components/FontPicker.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/components/RadiusPicker.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/components/ContentEditor.jsx"></script>
+
+  <!-- Preview (JSX via Babel) -->
+  <script type="text/babel" data-presets="react" src="js/preview/PreviewRoot.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/preview/Header.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/preview/Hero.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/preview/TrustBar.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/preview/Services.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/preview/Benefits.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/preview/Team.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/preview/Testimonials.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/preview/FAQ.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/preview/CTA.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/preview/Footer.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/preview/CookieBanner.jsx"></script>
+
+  <!-- Modes (JSX via Babel) -->
+  <script type="text/babel" data-presets="react" src="js/modes/StructureMode.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/modes/DesignMode.jsx"></script>
+  <script type="text/babel" data-presets="react" src="js/modes/ExportMode.jsx"></script>
+
+  <!-- App Entry (JSX via Babel) -->
+  <script type="text/babel" data-presets="react" src="js/app.jsx"></script>
+
+  <!-- Boot: load JSON data, then mount -->
+  <script>
+    (async function boot() {
+      try {
+        const SB5 = window.SB5 || (window.SB5 = {});
+        SB5.data = SB5.data || {};
+
+        async function loadJson(path) {
+          const res = await fetch(path, { cache: 'no-cache' });
+          if (!res.ok) throw new Error(`Failed to load ${path}: ${res.status}`);
+          return await res.json();
+        }
+
+        // Data JSON files
+        const [sections, templates, fonts] = await Promise.all([
+          loadJson('data/sections.json'),
+          loadJson('data/templates.json'),
+          loadJson('data/fonts.json')
+        ]);
+
+        SB5.data.sections = sections;
+        SB5.data.templates = templates;
+
+        // Map fonts -> fontsById for CSS generator convenience
+        SB5.data.fonts = fonts;
+        SB5.data.fontsById = (Array.isArray(fonts) ? fonts : []).reduce((acc, f) => {
+          if (f && f.id) acc[f.id] = f;
+          return acc;
+        }, {});
+
+        // Mount app
+        if (!SB5.app || typeof SB5.app.mount !== 'function') {
+          throw new Error('SB5.app.mount missing. Ensure js/app.jsx is loaded.');
+        }
+        SB5.app.mount('root');
+
+        // Register Service Worker (PWA offline)
+        if ('serviceWorker' in navigator) {
+          try {
+            await navigator.serviceWorker.register('./sw.js', { scope: './' });
+          } catch (e) {
+            console.warn('SW registration failed:', e);
+          }
+        }
+      } catch (err) {
+        console.error(err);
+        const root = document.getElementById('root');
+        if (root) {
+          root.innerHTML = `
+            <div style="font-family:system-ui;padding:16px">
+              <h2 style="margin:0 0 8px">Smooth Builder 5</h2>
+              <p style="margin:0 0 8px;color:#b91c1c"><strong>Boot error:</strong> ${String(err && err.message || err)}</p>
+              <p style="margin:0;color:#475569">Siehe Console für Details. Prüfe Script-Reihenfolge und Datenpfade.</p>
+            </div>
+          `;
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
