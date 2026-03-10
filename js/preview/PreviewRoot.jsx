@@ -232,13 +232,10 @@
           ))}
         </div>
 
-        {showCookie && CookieBanner() && (
-          <CookieBanner
-            settings={settings}
-            brand={brand}
-            readOnly={readOnly}
-          />
-        )}
+        {showCookie && (() => {
+          const CookieBannerComp = CookieBanner();
+          return CookieBannerComp ? <CookieBannerComp settings={settings} brand={brand} readOnly={readOnly} /> : null;
+        })()}
       </div>
     );
   }

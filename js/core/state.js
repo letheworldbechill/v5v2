@@ -107,6 +107,7 @@
       case ActionTypes.SET_SIDEBAR_TAB: return { ...state, ui: { ...state.ui, sidebarTab: String(payload || 'sections') } };
       case ActionTypes.SET_BUILDER_THEME: return { ...state, ui: { ...state.ui, builderTheme: payload === 'dark' ? 'dark' : 'light' } };
       case ActionTypes.SET_ACTIVE_ELEMENT_PATH: return { ...state, ui: { ...state.ui, activeElementPath: payload || null } };
+      case '__REPLACE_STATE__': return payload && typeof payload === 'object' ? payload : state;
       default: return state;
     }
   }
