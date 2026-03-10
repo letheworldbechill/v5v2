@@ -26,7 +26,7 @@
    This file is defensive: if a helper is missing, it falls back gracefully.
    ============================================ */
 
- function  {
+(function (global) {
   'use strict';
 
   const SB5 = global.SB5 = global.SB5 || {};
