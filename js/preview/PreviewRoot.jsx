@@ -216,8 +216,53 @@
         );
       }
 
-      // Unknown type: render nothing (safe)
-      return null;
+      // Generic fallback for section types without dedicated preview components
+      {
+        const sectionsData = (SB5.data && SB5.data.sections && SB5.data.sections.sections) || (SB5.data && SB5.data.sections) || {};
+        const meta = sectionsData[type];
+        const sectionName = (meta && meta.name) || type;
+        const fields = Object.keys(sectionContent).filter(k => typeof sectionContent[k] === 'string' || Array.isArray(sectionContent[k]));
+        const headline = sectionContent.headline || sectionContent.title || '';
+        const text = sectionContent.text || sectionContent.subline || '';
+        const items = sectionContent.items || sectionContent.steps || sectionContent.badges || [];
+
+        return (
+          <section
+            className={`sb-section sb-${type} ${ui.activeSection === s.id ? 'is-active' : ''}`}
+            style={{ paddingTop: spacing.pt, paddingBottom: spacing.pb }}
+            onClick={() => selectSection(s.id)}
+            role="region"
+            aria-label={sectionName}
+          >
+            <div className="sb-container">
+              <div className="sb-sectionHead">
+                <h2 className="sb-h2">{headline || sectionName}</h2>
+                {text && <p className="sb-p sb-muted">{text}</p>}
+              </div>
+              {Array.isArray(items) && items.length > 0 && (
+                <div className="sb-services__list" role="list">
+                  {items.map((it, idx) => {
+                    const label = (it && (it.label || it.title || it.name || it.q)) || `Item ${idx + 1}`;
+                    const desc = (it && (it.text || it.description || it.a || it.value)) || '';
+                    return (
+                      <div key={idx} className="sb-services__listItem" role="listitem">
+                        <div className="sb-services__icon" aria-hidden="true">{(it && it.icon) || '•'}</div>
+                        <div className="sb-services__body">
+                          <div className="sb-services__title">{label}</div>
+                          {desc && <div className="sb-services__text">{desc}</div>}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+              {!headline && !text && (!Array.isArray(items) || !items.length) && (
+                <div className="sb-empty">{sectionName} – bearbeite den Inhalt im Sidebar Editor.</div>
+              )}
+            </div>
+          </section>
+        );
+      }
     };
 
     const showCookie = !!(settings && settings.consent && settings.consent.enabled);

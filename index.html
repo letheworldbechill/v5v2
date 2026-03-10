@@ -146,13 +146,25 @@
         console.error(err);
         const root = document.getElementById('root');
         if (root) {
-          root.innerHTML = `
-            <div style="font-family:system-ui;padding:16px">
-              <h2 style="margin:0 0 8px">Smooth Builder 5</h2>
-              <p style="margin:0 0 8px;color:#b91c1c"><strong>Boot error:</strong> ${String(err && err.message || err)}</p>
-              <p style="margin:0;color:#475569">Siehe Console für Details. Prüfe Script-Reihenfolge und Datenpfade.</p>
-            </div>
-          `;
+          root.textContent = '';
+          const wrapper = document.createElement('div');
+          wrapper.style.cssText = 'font-family:system-ui;padding:16px';
+          const h2 = document.createElement('h2');
+          h2.style.cssText = 'margin:0 0 8px';
+          h2.textContent = 'Smooth Builder 5';
+          const p1 = document.createElement('p');
+          p1.style.cssText = 'margin:0 0 8px;color:#b91c1c';
+          const strong = document.createElement('strong');
+          strong.textContent = 'Boot error: ';
+          p1.appendChild(strong);
+          p1.appendChild(document.createTextNode(String(err && err.message || err)));
+          const p2 = document.createElement('p');
+          p2.style.cssText = 'margin:0;color:#475569';
+          p2.textContent = 'Siehe Console für Details. Prüfe Script-Reihenfolge und Datenpfade.';
+          wrapper.appendChild(h2);
+          wrapper.appendChild(p1);
+          wrapper.appendChild(p2);
+          root.appendChild(wrapper);
         }
       }
     })();

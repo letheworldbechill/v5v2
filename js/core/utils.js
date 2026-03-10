@@ -101,5 +101,13 @@
     return (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05);
   }
 
-  SB5.core.utils = { noop, isObject, clamp, deepMerge, deepClone, safeJsonParse, uid, slugify, escapeHtml, debounce, getByPath, setByPath, normalizeHex, hexToRgb, contrastRatio };
+  function isMac() {
+    return /Mac|iPhone|iPad|iPod/i.test(global.navigator && global.navigator.platform || '');
+  }
+
+  function hasRequiredContent(state) {
+    return state && Array.isArray(state.layout && state.layout.order) && state.layout.order.length > 0;
+  }
+
+  SB5.core.utils = { noop, isObject, clamp, deepMerge, deepClone, safeJsonParse, uid, slugify, escapeHtml, debounce, getByPath, setByPath, normalizeHex, hexToRgb, contrastRatio, isMac, hasRequiredContent };
 })(window);

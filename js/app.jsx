@@ -130,7 +130,7 @@
     if (s && typeof s.loadState === 'function') return s.loadState();
 
     try {
-      const raw = localStorage.getItem('sb5_state_v1');
+      const raw = localStorage.getItem('sb5_state_v5');
       if (!raw) return null;
       const parsed = JSON.parse(raw);
       return parsed && typeof parsed === 'object' ? parsed : null;
@@ -144,7 +144,7 @@
     if (s && typeof s.saveState === 'function') return s.saveState(state);
 
     try {
-      localStorage.setItem('sb5_state_v1', JSON.stringify(state));
+      localStorage.setItem('sb5_state_v5', JSON.stringify(state));
     } catch (_) {}
   }
 
@@ -293,6 +293,19 @@
     const onUndo = () => dispatch({ type: 'UNDO' });
     const onRedo = () => dispatch({ type: 'REDO' });
 
+    const onExportZip = useCallback(async () => {
+      const exp = SB5.exporters;
+      if (exp && typeof exp.exportProductionZip === 'function') {
+        try {
+          await exp.exportProductionZip(store.getState());
+        } catch (e) {
+          console.error('Export failed:', e);
+        }
+      } else {
+        console.warn('SB5.exporters.exportProductionZip not available.');
+      }
+    }, [store]);
+
     const canUndo = history.canUndo();
     const canRedo = history.canRedo();
 
@@ -308,6 +321,7 @@
             onUndo={onUndo}
             onRedo={onRedo}
             onModeChange={onModeChange}
+            onExportZip={onExportZip}
             state={state}
             dispatch={dispatch}
           />

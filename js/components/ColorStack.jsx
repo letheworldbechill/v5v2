@@ -17,9 +17,9 @@
 
   const { useEffect, useMemo, useRef, useState, useCallback } = React;
 
-  const LogoUpload = SB5.components.LogoUpload;
-  const ColorPalette = SB5.components.ColorPalette;
-  const Toast = SB5.components.Toast;
+  const getLogoUpload = () => SB5.components.LogoUpload;
+  const getColorPalette = () => SB5.components.ColorPalette;
+  const getToast = () => SB5.components.Toast;
 
   // ---------- Color math ----------
   function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
@@ -250,11 +250,11 @@
           onColorsChange(buildBrandFromPalette(pal, colors));
         }
 
-        if (Toast && Toast.success) Toast.success('Palette aus Logo extrahiert.');
+        { const T = getToast(); if (T && T.success) T.success('Palette aus Logo extrahiert.'); }
       } catch (e) {
         const msg = (e && e.message) ? e.message : 'Palette konnte nicht extrahiert werden.';
         setError(msg);
-        if (Toast && Toast.error) Toast.error(msg);
+        { const T = getToast(); if (T && T.error) T.error(msg); }
       } finally {
         setBusy(false);
       }
@@ -275,7 +275,7 @@
     const handleApplyAll = useCallback(() => {
       if (!palette.length) return;
       if (typeof onColorsChange === 'function') onColorsChange(buildBrandFromPalette(palette, colors));
-      if (Toast && Toast.success) Toast.success('Palette übernommen.');
+      { const T = getToast(); if (T && T.success) T.success('Palette übernommen.'); }
     }, [palette, onColorsChange, colors]);
 
     const handleAssign = useCallback((key, hex) => {
@@ -298,22 +298,25 @@
           <div className="color-stack__subtitle">Logo → Palette → Tokens</div>
         </div>
 
-        {LogoUpload ? (
-          <LogoUpload
-            value={logo}
-            onChange={handleUpload}
-            onRemove={() => {
-              if (typeof onLogoChange === 'function') onLogoChange(null);
-              setPalette([]);
-              setError(null);
-            }}
-            disabled={busy}
-          />
-        ) : (
-          <div className="color-stack__error">
-            LogoUpload fehlt (js/components/LogoUpload.jsx).
-          </div>
-        )}
+        {(() => {
+          const LU = getLogoUpload();
+          return LU ? (
+            <LU
+              value={logo}
+              onChange={handleUpload}
+              onRemove={() => {
+                if (typeof onLogoChange === 'function') onLogoChange(null);
+                setPalette([]);
+                setError(null);
+              }}
+              disabled={busy}
+            />
+          ) : (
+            <div className="color-stack__error">
+              LogoUpload fehlt (js/components/LogoUpload.jsx).
+            </div>
+          );
+        })()}
 
         <div className="color-stack__panel">
           <div className="color-stack__panelHeader">
@@ -380,17 +383,20 @@
           )}
         </div>
 
-        {ColorPalette && (
-          <div className="color-stack__panel">
-            <div className="color-stack__panelHeader">
-              <div className="color-stack__panelTitle">Brand Tokens</div>
+        {(() => {
+          const CP = getColorPalette();
+          return CP ? (
+            <div className="color-stack__panel">
+              <div className="color-stack__panelHeader">
+                <div className="color-stack__panelTitle">Brand Tokens</div>
+              </div>
+              <CP
+                colors={colors}
+                onChange={onColorsChange}
+              />
             </div>
-            <ColorPalette
-              colors={colors}
-              onChange={onColorsChange}
-            />
-          </div>
-        )}
+          ) : null;
+        })()}
       </div>
     );
   }
